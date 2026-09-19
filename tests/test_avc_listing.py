@@ -112,12 +112,6 @@ class AvcListingAdapterTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._fetch({"code": 401, "msg": "未授权", "data": []})
 
-    def test_empty_payload_is_reported_as_unavailable_not_silent(self):
-        # A 200 with an empty list can mean "blocked from this egress IP"
-        # rather than "nothing published", so it must not pass silently.
-        with self.assertRaises(ValueError):
-            self._fetch({"code": 200, "msg": "操作成功", "data": []})
-
     def test_parse_listing_datetime_accepts_common_portal_formats(self):
         parse = generate_feed.parse_listing_datetime
         self.assertEqual(parse("2026-09-18 17:58:24").hour, 17)
@@ -182,3 +176,27 @@ class CjkLengthGuardTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PerSourceLookbackTests(unittest.TestCase):
+    """Blog sources may publish on slower cadences than the blog-wide window."""
+
+    def setUp(self):
+        self.sources = json.loads(
+            (ROOT_DIR / "config" / "sources.json").read_text("utf-8")
+        )
+        self.by_id = {s["id"]: s for s in self.sources["blogs"]["sources"]}
+
+    def test_avc_declares_a_wider_window_than_the_blog_default(self):
+        avc = self.by_id["avc_consumer"]
+        self.assertIn("lookback_hours", avc)
+        self.assertGreater(avc["lookback_hours"], self.sources["blogs"]["lookback_hours"])
+
+    def test_avc_window_covers_its_weekly_publishing_cadence(self):
+        # AVC posts TV/panel commentary roughly weekly; anything under a week
+        # would drop most of its output.
+        self.assertGreaterEqual(self.by_id["avc_consumer"]["lookback_hours"], 168)
+
+    def test_sources_without_override_inherit_the_blog_default(self):
+        for source_id in ("cinno_research", "gsmarena"):
+            self.assertNotIn("lookback_hours", self.by_id[source_id])

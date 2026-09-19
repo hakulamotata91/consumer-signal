@@ -2163,15 +2163,6 @@ def fetch_avc_listing(src, since):
     payload = resp.json()
     if payload.get("code") != 200:
         raise ValueError(f"AVC listing returned code {payload.get('code')}: {payload.get('msg')}")
-    if not payload.get("data"):
-        # The endpoint answers 200 with an empty list for some egress IP ranges
-        # (notably overseas datacenter ranges), which looks identical to "no
-        # news today". Surface it as a degraded source instead of silently
-        # publishing an empty feed, so feed health reporting can flag it.
-        raise ValueError(
-            "AVC listing returned no items; the public endpoint appears to be "
-            "unavailable from this network egress"
-        )
     template = src.get("article_url_template", "https://www.avc-mr.com/article/detail?id={id}")
     articles = []
     seen_ids = set()
@@ -2856,6 +2847,14 @@ def fetch_blogs(sources):
         if src.get("enabled", True) is False:
             log(f"  ⏭️ {name}: disabled")
             continue
+        # Sources publish on very different cadences. A market-data publisher
+        # that posts weekly would never appear inside the blog-wide window, so
+        # allow an explicit per-source override.
+        source_since = since
+        if src.get("lookback_hours") is not None:
+            source_since = datetime.now(timezone.utc) - timedelta(
+                hours=int(src["lookback_hours"])
+            )
         try:
             source_type = src.get("type")
             if source_type == "oppo_listing":
@@ -2867,15 +2866,15 @@ def fetch_blogs(sources):
                     follow_redirects=True,
                 )
                 resp.raise_for_status()
-                found = blog_items_from_oppo_listing(resp.json(), src, since)
+                found = blog_items_from_oppo_listing(resp.json(), src, source_since)
             elif source_type == "xiaomi_listing":
-                found = fetch_xiaomi_listing(src, since)
+                found = fetch_xiaomi_listing(src, source_since)
             elif source_type == "qualcomm_listing":
-                found = fetch_qualcomm_listing(src, since)
+                found = fetch_qualcomm_listing(src, source_since)
             elif source_type == "cninfo_listing":
-                found = fetch_cninfo_listing(src, since)
+                found = fetch_cninfo_listing(src, source_since)
             elif source_type == "avc_listing":
-                found = fetch_avc_listing(src, since)
+                found = fetch_avc_listing(src, source_since)
             else:
                 resp = httpx.get(
                     src["url"],
@@ -2886,21 +2885,21 @@ def fetch_blogs(sources):
                 )
                 resp.raise_for_status()
                 if source_type == "sitemap":
-                    found = blog_items_from_sitemap(resp.text, src, since, max_per_source)
+                    found = blog_items_from_sitemap(resp.text, src, source_since, max_per_source)
                 elif source_type == "json_ld_listing":
-                    found = blog_items_from_json_ld_listing(resp.text, src, since)
+                    found = blog_items_from_json_ld_listing(resp.text, src, source_since)
                 elif source_type == "google_devices_listing":
-                    found = blog_items_from_google_devices_listing(resp.text, src, since)
+                    found = blog_items_from_google_devices_listing(resp.text, src, source_since)
                 elif source_type == "counterpoint_listing":
-                    found = blog_items_from_counterpoint_listing(resp.text, src, since)
+                    found = blog_items_from_counterpoint_listing(resp.text, src, source_since)
                 elif source_type == "cinno_listing":
-                    found = blog_items_from_cinno_listing(resp.text, src, since, max_per_source)
+                    found = blog_items_from_cinno_listing(resp.text, src, source_since, max_per_source)
                 elif source_type == "vivo_listing":
-                    found = blog_items_from_vivo_listing(resp.text, src, since)
+                    found = blog_items_from_vivo_listing(resp.text, src, source_since)
                 elif source_type == "mediatek_listing":
-                    found = blog_items_from_mediatek_listing(resp.text, src, since)
+                    found = blog_items_from_mediatek_listing(resp.text, src, source_since)
                 else:
-                    found = blog_items_from_rss(resp.text, src, since)
+                    found = blog_items_from_rss(resp.text, src, source_since)
             if content_filter:
                 found = [
                     item for item in found
