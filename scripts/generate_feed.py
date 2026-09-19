@@ -316,6 +316,29 @@ def flatten_keyword_groups(groups):
     ]
 
 
+def effective_text_length(text):
+    """Count text length with CJK characters weighted for information density.
+
+    The configured ``minimum_text_length`` guard exists to stop a bare brand or
+    category word (for example "Apple" or "面板") from being admitted on its
+    own. A raw character count does that job for English but systematically
+    rejects Chinese sources: an idiomatic Chinese headline of 20-30 characters
+    carries as much information as roughly 80-100 English characters, yet was
+    measured as "shorter" and dropped. Weighting each CJK character as three
+    units keeps the guard meaningful in both scripts without special-casing
+    any individual source.
+    """
+    total = 0
+    for char in normalize_text(text):
+        if "\u4e00" <= char <= "\u9fff":
+            total += 3
+        elif char.isascii() and char.isalnum():
+            total += 1
+        elif char.strip():
+            total += 1
+    return total
+
+
 def is_relevant_content(text, content_filter):
     """Apply the Consumer Signal priority-or-subject-and-signal rule."""
     if not content_filter:
@@ -324,7 +347,7 @@ def is_relevant_content(text, content_filter):
     normalized = normalize_text(text)
     logic = content_filter.get("matching_logic") or {}
     min_length = int(logic.get("minimum_text_length", 0) or 0)
-    if not normalized or len(normalized) < min_length:
+    if not normalized or effective_text_length(normalized) < min_length:
         return False
 
     exclusions = content_filter.get("exclusion_rules") or {}
@@ -2116,6 +2139,74 @@ def blog_items_from_cinno_listing(html, src, since, max_items=None):
     return articles
 
 
+def fetch_avc_listing(src, since):
+    """Fetch AVC (奥维云网) public information listing through its site API.
+
+    ``www.avc-mr.com`` is a Vue SPA, so the HTML shell carries no article data.
+    Its public news page calls an unauthenticated JSON endpoint on
+    ``newcompassback.avc-mr.com`` which returns the same public cards the site
+    renders. Only that documented public listing is used; no login, token or
+    Compass data product is touched. Titles link back to the AVC article page.
+    """
+    resp = httpx.get(
+        src["api_url"],
+        params={"term": src.get("term", 30)},
+        timeout=30,
+        headers={
+            "User-Agent": UA,
+            "Origin": src.get("origin", "https://www.avc-mr.com"),
+            "Referer": src.get("referer", "https://www.avc-mr.com/"),
+        },
+        follow_redirects=True,
+    )
+    resp.raise_for_status()
+    payload = resp.json()
+    if payload.get("code") != 200:
+        raise ValueError(f"AVC listing returned code {payload.get('code')}: {payload.get('msg')}")
+    template = src.get("article_url_template", "https://www.avc-mr.com/article/detail?id={id}")
+    articles = []
+    seen_ids = set()
+    for entry in payload.get("data") or []:
+        if not isinstance(entry, dict):
+            continue
+        article_id = str(entry.get("id") or "").strip()
+        title = normalize_text(entry.get("title"))
+        if not article_id or not title or article_id in seen_ids:
+            continue
+        published = parse_listing_datetime(entry.get("createTime"))
+        if not published or published < since:
+            continue
+        seen_ids.add(article_id)
+        articles.append(
+            with_source_metadata(
+                {
+                    "id": article_id,
+                    "source": src["id"],
+                    "source_name": src.get("name", src["id"]),
+                    "title": title,
+                    "url": template.format(id=article_id),
+                    "published": published.isoformat(),
+                    "summary": normalize_text(entry.get("author")),
+                },
+                src,
+            )
+        )
+    return articles
+
+
+def parse_listing_datetime(value):
+    """Parse the ``YYYY-MM-DD HH:MM:SS`` timestamps used by Chinese portals."""
+    text = normalize_text(value)
+    if not text:
+        return None
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
+
+
 VIVO_LISTING_DATE_RE = re.compile(
     r"\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|"
     r"Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+"
@@ -2774,6 +2865,8 @@ def fetch_blogs(sources):
                 found = fetch_qualcomm_listing(src, since)
             elif source_type == "cninfo_listing":
                 found = fetch_cninfo_listing(src, since)
+            elif source_type == "avc_listing":
+                found = fetch_avc_listing(src, since)
             else:
                 resp = httpx.get(
                     src["url"],

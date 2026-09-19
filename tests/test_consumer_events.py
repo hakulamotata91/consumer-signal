@@ -156,9 +156,10 @@ class FeedResilienceTests(unittest.TestCase):
         self.assertTrue(feed["degraded"])
 
     def test_client_surfaces_degraded_source_errors(self):
+        fresh = datetime.now(timezone.utc).isoformat()
         sources, warnings = prepare_digest.annotate_feed_sources(
             {"blogs": {"source": "remote", "filename": "feed-blogs.json", "url": "", "generated_at": "now"}},
-            {"blogs": {"generated_at": "2026-08-01T01:00:00+00:00", "errors": ["CINNO: timed out"]}},
+            {"blogs": {"generated_at": fresh, "errors": ["CINNO: timed out"]}},
         )
 
         self.assertTrue(sources["blogs"]["degraded"])

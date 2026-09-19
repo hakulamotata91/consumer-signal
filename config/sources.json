@@ -2,7 +2,12 @@
   "filtering": {
     "profile": "consumer_electronics",
     "config_path": "filter-terms.consumer-electronics.json",
-    "apply_to": ["twitter", "blogs", "podcasts", "arxiv"],
+    "apply_to": [
+      "twitter",
+      "blogs",
+      "podcasts",
+      "arxiv"
+    ],
     "notes": "Every active raw source shares the Consumer Signal relevance rule. Paid, login-only and unverified sources remain in source-catalog.consumer-electronics.json until they have a public, policy-compliant adapter."
   },
   "twitter": {
@@ -212,7 +217,15 @@
         "region": "global",
         "evidence_class": "primary_disclosure",
         "source_layer": "official_brand",
-        "priority_keywords": ["pixel", "fitbit", "google nest", "google home", "pixel watch", "pixel tablet", "tensor"],
+        "priority_keywords": [
+          "pixel",
+          "fitbit",
+          "google nest",
+          "google home",
+          "pixel watch",
+          "pixel tablet",
+          "tensor"
+        ],
         "notes": "Google 官方 Devices 分类页的公开卡片；解析其中的官网文章链接和发布时间，覆盖 Pixel、Fitbit、Nest、Google Home 与 Tensor 终端信息。"
       },
       {
@@ -224,8 +237,22 @@
         "region": "global",
         "evidence_class": "primary_disclosure",
         "source_layer": "official_brand",
-        "priority_keywords": ["meta quest", "ray-ban meta", "oakley meta", "meta glasses", "ai glasses", "smart glasses"],
-        "exclude_keywords": ["data center", "election", "political", "integrity", "misinformation", "content moderation"],
+        "priority_keywords": [
+          "meta quest",
+          "ray-ban meta",
+          "oakley meta",
+          "meta glasses",
+          "ai glasses",
+          "smart glasses"
+        ],
+        "exclude_keywords": [
+          "data center",
+          "election",
+          "political",
+          "integrity",
+          "misinformation",
+          "content moderation"
+        ],
         "notes": "Meta 官方 Newsroom RSS 覆盖 Quest、Ray-Ban Meta/Oakley Meta 与 AI 眼镜；共同过滤规则和来源级排除词剔除平台政策、选举与数据中心内容。"
       },
       {
@@ -249,12 +276,20 @@
           "from": "pc"
         },
         "article_url_template": "https://www.mi.com/global/discover/article?id={material_id}",
-        "material_types": ["newsroom"],
+        "material_types": [
+          "newsroom"
+        ],
         "domain": "consumer_electronics",
         "region": "china",
         "evidence_class": "primary_disclosure",
         "source_layer": "official_brand",
-        "exclude_keywords": ["xiaomi ev", "skynomad", "automotive", "vehicle", "suv"],
+        "exclude_keywords": [
+          "xiaomi ev",
+          "skynomad",
+          "automotive",
+          "vehicle",
+          "suv"
+        ],
         "notes": "Xiaomi Global Discover 的官网公开目录接口；抓取正式 Newsroom 公告并按时间窗口自动翻页。来源级排除小米汽车主题。"
       },
       {
@@ -297,7 +332,14 @@
         "region": "taiwan_asia",
         "evidence_class": "primary_disclosure",
         "source_layer": "component_supplier",
-        "exclude_keywords": ["automotive", "vehicle", "cockpit", "data center", "data-center", "cloud gaming"],
+        "exclude_keywords": [
+          "automotive",
+          "vehicle",
+          "cockpit",
+          "data center",
+          "data-center",
+          "cloud gaming"
+        ],
         "notes": "MediaTek 官网公开 Press Room；覆盖 Dimensity、Kompanio、智能电视、Wi-Fi、端侧 AI 等终端芯片与技术披露。来源级排除汽车、数据中心和云游戏网络主题。"
       },
       {
@@ -307,13 +349,39 @@
         "url": "https://www.qualcomm.com/news/releases",
         "graphql_url": "https://prdgraphql.www.qualcomm.com/graphql",
         "page_size": 24,
-        "resource_subtypes": ["press_release", "press_note"],
+        "resource_subtypes": [
+          "press_release",
+          "press_note"
+        ],
         "domain": "consumer_electronics",
         "region": "global",
         "evidence_class": "primary_disclosure",
         "source_layer": "component_supplier",
-        "exclude_keywords": ["automotive", "automated driving", "digital cockpit", "vehicle", "nascar", "cash dividend", "conference call", "data center", "dragonfly"],
-        "priority_keywords": ["snapdragon", "mobile platform", "pc platform", "ai pc", "intelligent eyewear", "spatial computing", "wearable", "wearables", "quarterly results", "fiscal results", "fiscal", "guidance"],
+        "exclude_keywords": [
+          "automotive",
+          "automated driving",
+          "digital cockpit",
+          "vehicle",
+          "nascar",
+          "cash dividend",
+          "conference call",
+          "data center",
+          "dragonfly"
+        ],
+        "priority_keywords": [
+          "snapdragon",
+          "mobile platform",
+          "pc platform",
+          "ai pc",
+          "intelligent eyewear",
+          "spatial computing",
+          "wearable",
+          "wearables",
+          "quarterly results",
+          "fiscal results",
+          "fiscal",
+          "guidance"
+        ],
         "notes": "Qualcomm 官网 Releases 页面使用的公开 GraphQL 新闻目录；按发布时间分页抓取 Snapdragon、PC、XR、穿戴及品牌合作等正式公告，并排除汽车、数据中心和纯财务日程主题。"
       },
       {
@@ -321,13 +389,71 @@
         "name": "巨潮资讯：消费电子供应链法定披露",
         "type": "cninfo_listing",
         "url": "https://www.cninfo.com.cn/new/fulltextSearch/full",
-        "companies": ["立讯精密", "歌尔股份", "京东方", "蓝思科技", "华勤技术", "闻泰科技", "韦尔股份", "兆易创新", "汇顶科技", "领益智造", "鹏鼎控股", "东山精密", "深天马", "水晶光电", "视源股份", "欧菲光", "长盈精密", "环旭电子", "欣旺达", "德赛电池", "瑞芯微", "全志科技", "顺络电子", "生益科技", "传音控股", "安克创新"],
+        "companies": [
+          "立讯精密",
+          "歌尔股份",
+          "京东方",
+          "蓝思科技",
+          "华勤技术",
+          "闻泰科技",
+          "韦尔股份",
+          "兆易创新",
+          "汇顶科技",
+          "领益智造",
+          "鹏鼎控股",
+          "东山精密",
+          "深天马",
+          "水晶光电",
+          "视源股份",
+          "欧菲光",
+          "长盈精密",
+          "环旭电子",
+          "欣旺达",
+          "德赛电池",
+          "瑞芯微",
+          "全志科技",
+          "顺络电子",
+          "生益科技",
+          "传音控股",
+          "安克创新"
+        ],
         "page_size": 30,
         "domain": "consumer_electronics",
         "region": "china",
         "evidence_class": "primary_disclosure",
         "source_layer": "component_supplier",
-        "exclude_keywords": ["股东大会", "董事会", "监事会", "独立董事", "股权激励", "股票期权", "行权", "薪酬", "减持", "回购", "担保", "诉讼", "章程", "募集资金", "可转换", "可转债", "选举", "聘任", "离任", "补选", "内部控制", "律师事务所", "法律意见书", "境外上市", "h股", "登记股东", "非登记股东", "公司通讯", "回条", "电子方式发布"],
+        "exclude_keywords": [
+          "股东大会",
+          "董事会",
+          "监事会",
+          "独立董事",
+          "股权激励",
+          "股票期权",
+          "行权",
+          "薪酬",
+          "减持",
+          "回购",
+          "担保",
+          "诉讼",
+          "章程",
+          "募集资金",
+          "可转换",
+          "可转债",
+          "选举",
+          "聘任",
+          "离任",
+          "补选",
+          "内部控制",
+          "律师事务所",
+          "法律意见书",
+          "境外上市",
+          "h股",
+          "登记股东",
+          "非登记股东",
+          "公司通讯",
+          "回条",
+          "电子方式发布"
+        ],
         "notes": "巨潮资讯公开标题检索，覆盖配置中的消费电子零部件、ODM、显示、光学、SoC、电池、被动元件、PCB 材料与中国品牌公司。保留法定披露标题、时间及巨潮官方 PDF 链接；不下载或解析公告全文。"
       },
       {
@@ -350,7 +476,13 @@
         "region": "taiwan_asia",
         "evidence_class": "early_signal",
         "source_layer": "supply_chain_analyst",
-        "exclude_keywords": ["股价", "股價", "stock price", "price target", "估值"],
+        "exclude_keywords": [
+          "股价",
+          "股價",
+          "stock price",
+          "price target",
+          "估值"
+        ],
         "notes": "郭明錤公开 Medium RSS。供应商、备货、产能和新品预测均按分析师线索呈现；过滤掉单纯股价与估值评论。"
       },
       {
@@ -398,6 +530,22 @@
         "notes": "公开行业洞察列表页；覆盖手机、面板、XR、电子纸、电视等终端与上游供需。仅保留命中共同消费电子过滤规则的公开文章。"
       },
       {
+        "id": "avc_consumer",
+        "name": "奥维云网（AVC）",
+        "type": "avc_listing",
+        "url": "https://www.avc-mr.com/article",
+        "api_url": "https://newcompassback.avc-mr.com/applet/user/avc-information/info/list",
+        "term": 30,
+        "article_url_template": "https://www.avc-mr.com/article/detail?id={id}",
+        "origin": "https://www.avc-mr.com",
+        "referer": "https://www.avc-mr.com/",
+        "domain": "consumer_electronics",
+        "region": "china",
+        "evidence_class": "market_data",
+        "source_layer": "market_data",
+        "notes": "奥维云网（AVC，证券代码 831101）官网公开资讯列表。站点为 Vue SPA，页面数据由无鉴权的公开 JSON 接口提供，仅取标题、发布时间、作者与原文链接，不触碰需登录的罗盘数据产品或付费报告。重点覆盖电视、家电、显示面板的零售与价格数据。"
+      },
+      {
         "id": "gsmarena",
         "name": "GSMArena News and Reviews",
         "type": "rss",
@@ -416,7 +564,14 @@
         "region": "global",
         "evidence_class": "review_feedback",
         "source_layer": "reviews",
-        "exclude_keywords": ["best price", "deals", "deal", "save $", "discount", "coupon"],
+        "exclude_keywords": [
+          "best price",
+          "deals",
+          "deal",
+          "save $",
+          "discount",
+          "coupon"
+        ],
         "notes": "保留新品、评测与行业报道；来源级排除促销、折扣和优惠券文章。"
       },
       {
@@ -428,58 +583,115 @@
         "region": "global",
         "evidence_class": "industry_reporting",
         "source_layer": "product_rumors",
-        "exclude_keywords": ["deals", "deal", "daily:", "podcast", "[poll]", "poll", "giveaway", "discount", "save $", "bargains", "best price", "how to", "shazam", "ariana grande", "snoopy", "final earnings call", "apple upgrade vs", "no surprises expected"],
+        "exclude_keywords": [
+          "deals",
+          "deal",
+          "daily:",
+          "podcast",
+          "[poll]",
+          "poll",
+          "giveaway",
+          "discount",
+          "save $",
+          "bargains",
+          "best price",
+          "how to",
+          "shazam",
+          "ariana grande",
+          "snoopy",
+          "final earnings call",
+          "apple upgrade vs",
+          "no surprises expected"
+        ],
         "notes": "保留产品、供应链、出货与业务变化；来源级排除促销、日播、投票、教程、音乐贴纸、影视节目、人物致谢和无新事实的财报预告。"
       },
-    {
-      "id": "macrumors",
+      {
+        "id": "macrumors",
         "name": "MacRumors",
         "type": "rss",
         "url": "https://feeds.macrumors.com/MacRumors-All",
         "domain": "consumer_electronics",
         "region": "global",
-      "evidence_class": "industry_reporting",
-      "source_layer": "product_rumors",
-      "exclude_keywords": ["deals", "deal", "bargains", "the macrumors show", "podcast", "giveaway", "discount", "save $", "best price", "how to", "shazam", "ariana grande", "how apple changed under tim cook", "thanks shareholders"],
-      "notes": "保留新品、供应链与市场报道；来源级排除促销、节目、教程、音乐贴纸及无关的人物回顾。"
-    },
-    {
-      "id": "ifanr",
-      "name": "爱范儿",
-      "type": "rss",
-      "url": "https://www.ifanr.com/feed/",
-      "domain": "consumer_electronics",
-      "region": "china",
-      "evidence_class": "review_feedback",
-      "source_layer": "china_reviews",
-      "exclude_keywords": ["澎程", "理想", "问界", "小鹏", "蔚来", "比亚迪", "特斯拉", "极氪", "零跑"],
-      "notes": "公开全文 RSS；通过共同词表保留终端新品、体验、端侧 AI 与产业变化，并排除汽车和泛互联网内容。"
-    },
-    {
-      "id": "ifixit",
-      "name": "iFixit",
-      "type": "rss",
-      "url": "https://www.ifixit.com/News/rss",
-      "cookies": {"ntabt": "1"},
-      "domain": "consumer_electronics",
-      "region": "global",
-      "evidence_class": "review_feedback",
-      "source_layer": "teardowns",
-      "priority_keywords": ["teardown", "tear down", "disassembly", "repairability", "repair score", "repair scoring", "repair standard", "replaceable battery", "replaceable batteries", "parts availability"],
-      "notes": "公开 News RSS；仅将拆解、可维修性、可替换电池和零部件可得性等高价值条目作为来源级优先信号。ntabt 是网页初始响应设置的公开非登录 cookie。"
-    },
-    {
-      "id": "geekerwan",
-      "name": "极客湾 Geekerwan",
-      "type": "rss",
-      "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCeUJO1H3TEXu2syfAAPjYKQ",
-      "enabled": false,
-      "domain": "consumer_electronics",
-      "region": "china",
-      "evidence_class": "review_feedback",
-      "source_layer": "engineering_reviews",
-      "notes": "官方 YouTube Atom endpoint 在最近验证时返回 404，故暂停抓取而非在每日任务中持续报错。确认新的公开订阅接口后再启用；目标内容仍为 SoC、性能、功耗、续航、AI PC 与终端工程分析。"
-    }
-  ]
-}
+        "evidence_class": "industry_reporting",
+        "source_layer": "product_rumors",
+        "exclude_keywords": [
+          "deals",
+          "deal",
+          "bargains",
+          "the macrumors show",
+          "podcast",
+          "giveaway",
+          "discount",
+          "save $",
+          "best price",
+          "how to",
+          "shazam",
+          "ariana grande",
+          "how apple changed under tim cook",
+          "thanks shareholders"
+        ],
+        "notes": "保留新品、供应链与市场报道；来源级排除促销、节目、教程、音乐贴纸及无关的人物回顾。"
+      },
+      {
+        "id": "ifanr",
+        "name": "爱范儿",
+        "type": "rss",
+        "url": "https://www.ifanr.com/feed/",
+        "domain": "consumer_electronics",
+        "region": "china",
+        "evidence_class": "review_feedback",
+        "source_layer": "china_reviews",
+        "exclude_keywords": [
+          "澎程",
+          "理想",
+          "问界",
+          "小鹏",
+          "蔚来",
+          "比亚迪",
+          "特斯拉",
+          "极氪",
+          "零跑"
+        ],
+        "notes": "公开全文 RSS；通过共同词表保留终端新品、体验、端侧 AI 与产业变化，并排除汽车和泛互联网内容。"
+      },
+      {
+        "id": "ifixit",
+        "name": "iFixit",
+        "type": "rss",
+        "url": "https://www.ifixit.com/News/rss",
+        "cookies": {
+          "ntabt": "1"
+        },
+        "domain": "consumer_electronics",
+        "region": "global",
+        "evidence_class": "review_feedback",
+        "source_layer": "teardowns",
+        "priority_keywords": [
+          "teardown",
+          "tear down",
+          "disassembly",
+          "repairability",
+          "repair score",
+          "repair scoring",
+          "repair standard",
+          "replaceable battery",
+          "replaceable batteries",
+          "parts availability"
+        ],
+        "notes": "公开 News RSS；仅将拆解、可维修性、可替换电池和零部件可得性等高价值条目作为来源级优先信号。ntabt 是网页初始响应设置的公开非登录 cookie。"
+      },
+      {
+        "id": "geekerwan",
+        "name": "极客湾 Geekerwan",
+        "type": "rss",
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCeUJO1H3TEXu2syfAAPjYKQ",
+        "enabled": false,
+        "domain": "consumer_electronics",
+        "region": "china",
+        "evidence_class": "review_feedback",
+        "source_layer": "engineering_reviews",
+        "notes": "官方 YouTube Atom endpoint 在最近验证时返回 404，故暂停抓取而非在每日任务中持续报错。确认新的公开订阅接口后再启用；目标内容仍为 SoC、性能、功耗、续航、AI PC 与终端工程分析。"
+      }
+    ]
+  }
 }
