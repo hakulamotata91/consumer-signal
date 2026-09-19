@@ -2163,6 +2163,15 @@ def fetch_avc_listing(src, since):
     payload = resp.json()
     if payload.get("code") != 200:
         raise ValueError(f"AVC listing returned code {payload.get('code')}: {payload.get('msg')}")
+    if not payload.get("data"):
+        # The endpoint answers 200 with an empty list for some egress IP ranges
+        # (notably overseas datacenter ranges), which looks identical to "no
+        # news today". Surface it as a degraded source instead of silently
+        # publishing an empty feed, so feed health reporting can flag it.
+        raise ValueError(
+            "AVC listing returned no items; the public endpoint appears to be "
+            "unavailable from this network egress"
+        )
     template = src.get("article_url_template", "https://www.avc-mr.com/article/detail?id={id}")
     articles = []
     seen_ids = set()

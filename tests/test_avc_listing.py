@@ -112,6 +112,12 @@ class AvcListingAdapterTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._fetch({"code": 401, "msg": "未授权", "data": []})
 
+    def test_empty_payload_is_reported_as_unavailable_not_silent(self):
+        # A 200 with an empty list can mean "blocked from this egress IP"
+        # rather than "nothing published", so it must not pass silently.
+        with self.assertRaises(ValueError):
+            self._fetch({"code": 200, "msg": "操作成功", "data": []})
+
     def test_parse_listing_datetime_accepts_common_portal_formats(self):
         parse = generate_feed.parse_listing_datetime
         self.assertEqual(parse("2026-09-18 17:58:24").hour, 17)
