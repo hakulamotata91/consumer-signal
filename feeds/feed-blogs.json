@@ -896,13 +896,78 @@
       "region": "global",
       "evidence_class": "industry_reporting",
       "source_layer": "product_rumors"
+    },
+    {
+      "id": "1009142159506407424",
+      "source": "avc_consumer",
+      "source_name": "奥维云网（AVC）",
+      "title": "手机充电器7月线上市场：图拉斯逆势增长，氮化镓下探与集成化破局",
+      "url": "https://www.avc-mr.com/article/detail?id=1009142159506407424",
+      "published": "2026-09-16T16:50:39+00:00",
+      "summary": "新零售研究组",
+      "domain": "consumer_electronics",
+      "region": "china",
+      "evidence_class": "market_data",
+      "source_layer": "market_data"
+    },
+    {
+      "id": "1008791761033625600",
+      "source": "avc_consumer",
+      "source_name": "奥维云网（AVC）",
+      "title": "移动电源7月线上市场：倍思、图拉斯份额承压，自带线与快充引领价值回归",
+      "url": "https://www.avc-mr.com/article/detail?id=1008791761033625600",
+      "published": "2026-09-15T17:38:18+00:00",
+      "summary": "新零售研究组",
+      "domain": "consumer_electronics",
+      "region": "china",
+      "evidence_class": "market_data",
+      "source_layer": "market_data"
+    },
+    {
+      "id": "1007295253440364544",
+      "source": "avc_consumer",
+      "source_name": "奥维云网（AVC）",
+      "title": "7月智能手表线上市场：苹果华为稳占七成，AI端侧化重塑手表格局",
+      "url": "https://www.avc-mr.com/article/detail?id=1007295253440364544",
+      "published": "2026-09-11T14:31:43+00:00",
+      "summary": "新零售研究组",
+      "domain": "consumer_electronics",
+      "region": "china",
+      "evidence_class": "market_data",
+      "source_layer": "market_data"
+    },
+    {
+      "id": "1006932943710453760",
+      "source": "avc_consumer",
+      "source_name": "奥维云网（AVC）",
+      "title": "漫步者、小米份额逆势提升，开放式耳机渗透仍有空间",
+      "url": "https://www.avc-mr.com/article/detail?id=1006932943710453760",
+      "published": "2026-09-10T14:32:01+00:00",
+      "summary": "新零售研究组",
+      "domain": "consumer_electronics",
+      "region": "china",
+      "evidence_class": "market_data",
+      "source_layer": "market_data"
+    },
+    {
+      "id": "1005854473844686848",
+      "source": "avc_consumer",
+      "source_name": "奥维云网（AVC）",
+      "title": "IFA 2026电视技术趋势解析：Mini‑LED分化、OLED演进与AI变革",
+      "url": "https://www.avc-mr.com/article/detail?id=1005854473844686848",
+      "published": "2026-09-07T15:06:34+00:00",
+      "summary": "奥维睿沃",
+      "domain": "consumer_electronics",
+      "region": "china",
+      "evidence_class": "market_data",
+      "source_layer": "market_data"
     }
   ],
   "errors": [
     "巨潮资讯：消费电子供应链法定披露: Client error '403 Forbidden' for url 'https://www.cninfo.com.cn/new/fulltextSearch/full?searchkey=%E7%AB%8B%E8%AE%AF%E7%B2%BE%E5%AF%86&sdate=2026-09-17&edate=2026-09-19&isfulltext=false&sortName=pubdate&sortType=desc&pageNum=1&pageSize=30&type='\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
   ],
-  "generated_at": "2026-09-19T16:43:44.537989+00:00",
+  "generated_at": "2026-09-19T16:45:53.568995+00:00",
   "profile": "consumer_electronics",
-  "attempted_at": "2026-09-19T16:43:44.537989+00:00",
+  "attempted_at": "2026-09-19T16:45:53.568995+00:00",
   "degraded": true
 }
