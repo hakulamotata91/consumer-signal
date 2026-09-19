@@ -901,8 +901,8 @@
   "errors": [
     "巨潮资讯：消费电子供应链法定披露: Client error '403 Forbidden' for url 'https://www.cninfo.com.cn/new/fulltextSearch/full?searchkey=%E7%AB%8B%E8%AE%AF%E7%B2%BE%E5%AF%86&sdate=2026-09-17&edate=2026-09-19&isfulltext=false&sortName=pubdate&sortType=desc&pageNum=1&pageSize=30&type='\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
   ],
-  "generated_at": "2026-09-19T16:42:28.660153+00:00",
+  "generated_at": "2026-09-19T16:43:44.537989+00:00",
   "profile": "consumer_electronics",
-  "attempted_at": "2026-09-19T16:42:28.660153+00:00",
+  "attempted_at": "2026-09-19T16:43:44.537989+00:00",
   "degraded": true
 }
